@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script type="text/javascript"
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		</script>
+		
+		<title>
+			VM Tech
+		</title>
+	</head>
+	<body>
+		<p>Search for staff</p>
+		<form id="staffForm" action="http://127.0.0.1:8080">
+			<div>
+				Username:  <input id="userInput"></input>
+			</div>
+		</form>
+		
+		<div id="result"></div>
+		
+		<script>
+			function formhandler(){
+				alert("Submitting");
+				var userInput = $('#userInput').val();
+				$.get("http://127.0.0.1:8080/people/receivedUsername",
+					function (data){
+						var userDetails = "Username: " + data.username + "<br/>" +
+										"Forename: " + data.forename + "<br/>" +
+										"Surname: " + data.surname;
+						$('#result').html(userDetails);
+					});
+				return false;
+			};
+			
+			$("#staffForm").on("submit", formhandler);
+		</script>
+	</body>
+</html>
