@@ -12,7 +12,7 @@ var songs = {"hai": {"fulltitle": "Blah Blah", "type": "atonal"}};
 app.get('/songs', function(req, resp){
 
 	const title = req.query.title;
-  resp.send('Hello world ' + songs[title].fulltitle);
+	resp.send('Hello world ' + songs[title].fulltitle);
 })
 
 app.listen(8090);
