@@ -1,7 +1,7 @@
 "use strict"
 
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 var bodyParser = require('body-parser');
 
@@ -15,4 +15,4 @@ app.get('/songs', function(req, resp){
 	resp.send('Hello world' + songs[t].fulltitle);
 })
 
-app.listen(8080);
+module.exports = app;
