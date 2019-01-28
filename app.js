@@ -16,8 +16,7 @@ app.get('/people', function(req, resp){
 })
 
 app.get('/people/:username', function(req, resp){
-	var response = people[req.query.username];
-	console.log(people[req.query.username]);
+	var response = people[req.params.username];
 	resp.send(response);
 })
 

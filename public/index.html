@@ -11,30 +11,43 @@
 		</title>
 	</head>
 	<body>
-		<p>Search for staff</p>
-		<form id="staffForm" action="http://127.0.0.1:8080">
-			<div>
-				Username:  <input id="userInput"></input>
-			</div>
-		</form>
-		
-		<div id="result"></div>
-		
-		<script>
-			function formhandler(){
-				alert("Submitting");
-				var userInput = $('#userInput').val();
-				$.get("http://127.0.0.1:8080/people/receivedUsername",
-					function (data){
-						var userDetails = "Username: " + data.username + "<br/>" +
-										"Forename: " + data.forename + "<br/>" +
-										"Surname: " + data.surname;
-						$('#result').html(userDetails);
-					});
-				return false;
-			};
+		<div>
+			<h1>Staff search</h1>
+			<form id="staffForm" action="http://127.0.0.1:8080">
+				<div>
+					Username:  <input id="userInput"></input>
+				</div>
+			</form>
+		</div>
 			
-			$("#staffForm").on("submit", formhandler);
-		</script>
+			<div id="resultTable" style="visibility:hidden">
+				<table>
+					<tr>
+						<th>Forename</th>
+						<th>Surname</th>
+					</tr>
+					<tr>
+						<th id="forename">a</th>
+						<th id="surname">b</th>
+					</tr>
+				</table>
+			</div>
+			
+			<script>
+				function formhandler(){
+					alert("Submitting");
+					var userInput = $('#userInput').val();
+					$.get("http://127.0.0.1:8080/people/" + userInput,
+						function (data){
+						alert(data);
+							$('#forename').html(data.forename);
+							$('#surname').html(data.surname);
+							$('#resultTable').css("visibility", "visible");
+						});
+					return false;
+				};
+				
+				$("#staffForm").on("submit", formhandler);
+			</script>
 	</body>
 </html>
