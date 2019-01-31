@@ -1,37 +1,210 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	
 	<head>
-		<script type="text/javascript"
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-		</script>
+		<meta charset="utf-8">
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Kaushan Script' rel='stylesheet'>
+		
+		<link href="css/agency.min.css" rel="stylesheet">
+		<script src="js/agency.min.js"></script>
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		
 		<title>
-			VM Tech
+			VM Tech - Members
 		</title>
 	</head>
-	<body>
-		<p>Search for staff</p>
-		<form id="staffForm" action="http://127.0.0.1:8080">
-			<div>
-				Username:  <input id="userInput"></input>
+	
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navBar">
+			<div class="container">
+				<a class="navbar-brand js-scroll-trigger" style="font-size: 42px" href="#page-top">VM Tech - Members</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav text-uppercase ml-auto">
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#searchMembers">Search Members</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#addMembers">Add Members</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#serviceRequests">Service Requests</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#messages">Messages</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</form>
+		</nav>
 		
-		<div id="result"></div>
+		<section id="searchMembers" class="bg-light">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading text-uppercase">Search Members</h2>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<form id="getPersonForm" class="form-inline" action="http://127.0.0.1:8080">
+						<div class="form-group">
+							<label for="username" class="text-uppercase mr-3">Search by Username: </label>
+							<input type="text" class="form-control mr-3" id="username" placeholder="username" required>
+							<button type="submit" class="btn btn-warning">Search</button>
+						</div>
+					</form>
+				</div>
+				<div class="row justify-content-center m-3">
+					OR
+				</div>
+				<div class="row justify-content-center">
+					<form id="getPeopleForm" class="form" action="http://127.0.0.1:8080">
+						<button type="submit" class="btn btn-warning">Display all members</button>
+					</form>
+				</div>
+				<div id="peopleResultTable" class="table-responsive table-hover m-4">
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<th>Username</th>
+								<th>Firstname</th>
+								<th>Surname</th>
+								<th>Role</th>
+							</tr>
+						</thead>
+						<tbody id="tableBody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
 		
-		<script>
-			function formhandler(){
-				alert("Submitting");
-				var userInput = $('#userInput').val();
-				$.get("http://127.0.0.1:8080/people", "receivedUsername=" + userInput,
+		<section id="addMembers">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 offset-sm-3 text-center">
+						<div class="col-lg-12 text-center mb-4">
+							<h2 class="section-heading text-uppercase">Add Members</h2>
+						</div>
+						<div class="info-form">
+							<form id="addPersonForm" class="form" action="http://127.0.0.1:8080">
+								<div class="form-group mb-4">
+									<label class="sr-only">Username</label>
+									<input type="text" class="form-control" style="text-align: center" id="newUsername" placeholder="username" required>
+								</div>
+								<div class="form-group mb-4">
+									<label class="sr-only">Firstname</label>
+									<input type="text" class="form-control" style="text-align: center" id="newFirstname" placeholder="firstname" required>
+								</div>
+								<div class="form-group mb-4">
+									<label class="sr-only">Surname</label>
+									<input type="text" class="form-control" style="text-align: center" id="newSurname" placeholder="surname" required>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-warning">Submit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<script>			
+			function getPeopleFunction(){
+				$.get("http://127.0.0.1:8080/people",
 					function (data){
-						$('#result').data;
+							
+						$("#peopleResultTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+					
+						var peopleArray = Object.values(data);
+						var tableLength = peopleArray.length;
+
+						for(var i = 0; i < tableLength ; i++){
+							var recordArray = Object.values(peopleArray[i]);
+							var tableWidth = recordArray.length;
+
+							var row = $("<tr>");
+							for(var j = 0; j < tableWidth - 1; j++){
+								row.append($("<td>" + recordArray[j] + "</td>"));
+							}
+							row.append($("</tr>"));
+							row.hide();
+							$('tr:last-child').after(row);
+							row.fadeIn("slow");
+							//$('#tableBody').append(row)
+							
+						}
 					});
 				return false;
 			};
 			
-			$("#staffForm").on("submit", formhandler);
+			function getPersonFunction(){
+				$.get("http://127.0.0.1:8080/people/" + $('#username').val(),
+					function (data){
+							
+						$("#peopleResultTable").find("tr:gt(0)").remove();
+					
+						var recordArray = data;
+						var tableWidth = recordArray.length;
+
+						var row = $("<tr>");
+						for(var j = 0; j < tableWidth; j++){
+							row.append($("<td>" + recordArray[j] + "</td>"));
+						}
+						row.append($("</tr>"));
+						row.hide();
+						$('tr:last-child').after(row);
+						row.fadeIn("slow");
+						//$('#tableBody').append(row)
+						
+					});
+				return false;
+			};
+			
+			function addPersonFunction(){
+				$.post("http://127.0.0.1:8080/people/",
+					{
+					username: $('#newUsername').val(),
+					firstname: $('#newFirstname').val(),
+					surname: $('#newSurname').val(),
+					
+					access_token: 'concertina'
+					},
+					function (data){
+						if(data == true){
+							alert('User added successfully');
+						}
+						if(data == false){
+							alert('Username already taken, please try a different username');
+							$('#newUsername').val("");
+						}
+					});
+				//this.on("error", alert('Forbidden')).preventDefault();
+				return false;
+			}
+			
+			$("#getPeopleForm").on("submit", getPeopleFunction);
+			$("#getPersonForm").on("submit", getPersonFunction);
+			$("#addPersonForm").on("submit", addPersonFunction);
 		</script>
+			
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.0/bootstrap-slider.min.js"></script>-->
+		<script src="js/agency.min.js"></script>
 	</body>
 </html>
