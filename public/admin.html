@@ -18,6 +18,11 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+		<link rel="manifest" href="/favicon/site.webmanifest">
+		
 		<title>
 			VM Tech - Members
 		</title>
@@ -59,7 +64,7 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getPersonForm" class="form-inline" action="http://127.0.0.1:8080">
+					<form id="getPersonForm" class="form-inline" action="https://unified-destiny-230410.appspot.com">
 						<div class="form-group">
 							<label for="username" class="text-uppercase mr-3">Search by Username: </label>
 							<input type="text" class="form-control mr-3" id="username" placeholder="username" required>
@@ -71,12 +76,12 @@
 					OR
 				</div>
 				<div class="row justify-content-center">
-					<form id="getPeopleForm" class="form" action="http://127.0.0.1:8080">
+					<form id="getPeopleForm" class="form" action="https://unified-destiny-230410.appspot.com">
 						<button type="submit" class="btn btn-warning">Display all members</button>
 					</form>
 				</div>
-				<div id="peopleResultTable" class="table-responsive">
-					<table class="table mt-4">
+				<div id="peopleResultTable" class="table-responsive" style="visibility:hidden">
+					<table class="table mt-4 ">
 						<thead class="thead-light">
 							<tr>
 								<th>Username</th>
@@ -100,7 +105,7 @@
 							<h2 class="section-heading text-uppercase" style="margin-bottom: 50px">Add Members</h2>
 						</div>
 						<div class="info-form">
-							<form id="addPersonForm" class="form" action="http://127.0.0.1:8080">
+							<form id="addPersonForm" class="form" action="https://unified-destiny-230410.appspot.com">
 								<div class="form-group mb-4">
 									<label class="sr-only">Username</label>
 									<input type="text" class="form-control" style="text-align: center" id="newUsername" placeholder="username" required>
@@ -140,15 +145,15 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getRequestsForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
-						<button type="submit" class="btn btn-warning">Display incomplete service requests</button>
+					<form id="getRequestsForm" class="form" style="margin-right:15px" action="https://unified-destiny-230410.appspot.com">
+						<button type="submit" style="margin-bottom:4px" class="btn btn-warning">Display incomplete service requests</button>
 					</form>
-					<form id="getAllRequestsForm" class="form" action="http://127.0.0.1:8080">
+					<form id="getAllRequestsForm" class="form" action="https://unified-destiny-230410.appspot.com">
 						<button type="submit" class="btn btn-warning">Display all service requests</button>
 					</form>
 				</div>
-				<div class="table-responsive">
-					<table id="requestsTable" class="table mt-4">
+				<div class="table-responsive" style="visibility:hidden">
+					<table id="requestsTable" class="table mt-4 table-responsive">
 						<thead class="thead-light">
 							<tr>
 								<th>RequestID</th>
@@ -183,15 +188,15 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getMessagesForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
+					<form id="getMessagesForm" class="form" style="margin-right:15px" action="https://unified-destiny-230410.appspot.com">
 						<button type="submit" class="btn btn-warning">Display unanswered messages</button>
 					</form>
-					<form id="getAllMessagesForm" class="form" action="http://127.0.0.1:8080">
+					<form id="getAllMessagesForm" class="form" action="https://unified-destiny-230410.appspot.com">
 						<button type="submit" class="btn btn-warning">Display all messages</button>
 					</form>
 				</div>
-				<div class="table-responsive">
-					<table id="messagesTable" width="100%" class="table mt-4">
+				<div class="table-responsive" style="visibility:hidden">
+					<table id="messagesTable" width="100%" class="table mt-4 table-responsive">
 						<thead class="thead-light">
 							<tr>
 								<th>MessageID</th>
@@ -217,10 +222,11 @@
 		
 		<script>			
 			function getPeopleFunction(){
-				$.get("http://127.0.0.1:8080/people",
+				$.get("https://unified-destiny-230410.appspot.com/people",
 					function (data){
 							
 						$("#peopleResultTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+						$("#peopleResultTable").css('visibility', 'visible');
 					
 						var peopleArray = Object.values(data);
 						var tableLength = peopleArray.length;
@@ -243,10 +249,11 @@
 			};
 			
 			function getPersonFunction(){
-				$.get("http://127.0.0.1:8080/people/" + $('#username').val(),
+				$.get("https://unified-destiny-230410.appspot.com/people/" + $('#username').val(),
 					function (data){
 							
 						$("#peopleResultTable").find("tr:gt(0)").remove();
+						$("#peopleResultTable").css('visibility', 'visible');
 					
 						var recordArray = Object.values(data).slice(0,-1);
 						var tableWidth = recordArray.length;
@@ -265,7 +272,7 @@
 			};
 			
 			function addPersonFunction(){
-				$.post("http://127.0.0.1:8080/people/",
+				$.post("https://unified-destiny-230410.appspot.com/people/",
 					{
 					username: $('#newUsername').val(),
 					firstname: $('#newFirstname').val(),
@@ -292,10 +299,11 @@
 			}
 			
 			function getRequestsFunction(){
-				$.get("http://127.0.0.1:8080/serviceRequest",
+				$.get("https://unified-destiny-230410.appspot.com/serviceRequest",
 					function (data){
 							
 						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+						$("#requestsTable").css('visibility', 'visible');
 					
 						var peopleArray = Object.values(data);
 						var tableLength = peopleArray.length;
@@ -331,10 +339,11 @@
 			};
 			
 			function getAllRequestsFunction(){
-				$.get("http://127.0.0.1:8080/serviceRequest",
+				$.get("https://unified-destiny-230410.appspot.com/serviceRequest",
 					function (data){
 							
 						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+						$("#requestsTable").css('visibility', 'visible');
 					
 						var peopleArray = Object.values(data);
 						var tableLength = peopleArray.length;
@@ -371,14 +380,14 @@
 			function requestClick(){
 				var requestID = $(this).attr('id').replace('request','');
 				
-				$.get("http://127.0.0.1:8080/completeRequest", {"id":parseInt(requestID)},
+				$.get("https://unified-destiny-230410.appspot.com/completeRequest", {"id":parseInt(requestID)},
 					function (data){
 						var complete =  data;
 						
 						if(!complete){ // If state needs to be changed
 							if(confirm("Are you sure you want to mark Request " + requestID + " as completed?")){
 								// Mark as Completed
-								$.post("http://127.0.0.1:8080/completeRequest/",
+								$.post("https://unified-destiny-230410.appspot.com/completeRequest/",
 								{
 								id: requestID,
 								completed: true,
@@ -404,10 +413,11 @@
 			}
 			
 			function getMessagesFunction(){
-				$.get("http://127.0.0.1:8080/message",
+				$.get("https://unified-destiny-230410.appspot.com/message",
 					function (data){
 							
 						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+						$("#messagesTable").css('visibility', 'visible');
 					
 						var peopleArray = Object.values(data);
 						var tableLength = peopleArray.length;
@@ -440,10 +450,11 @@
 			};
 			
 			function getAllMessagesFunction(){
-				$.get("http://127.0.0.1:8080/message",
+				$.get("https://unified-destiny-230410.appspot.com/message",
 					function (data){
 							
 						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+						$("#messagesTable").css('visibility', 'visible');
 					
 						var peopleArray = Object.values(data);
 						var tableLength = peopleArray.length;
@@ -477,14 +488,14 @@
 			function messageClick(){
 				var messageID = $(this).attr('id').replace('message','');
 				
-				$.get("http://127.0.0.1:8080/answeredMessage", {"id":parseInt(messageID)},
+				$.get("https://unified-destiny-230410.appspot.com/answeredMessage", {"id":parseInt(messageID)},
 					function (data){
 						var complete =  data;
 						
 						if(!complete){ // If state needs to be changed
 							if(confirm("Are you sure you want to mark Message " + messageID + " as answered?")){
 								// Mark as Completed
-								$.post("http://127.0.0.1:8080/answeredMessage/",
+								$.post("https://unified-destiny-230410.appspot.com/answeredMessage/",
 								{
 								id: messageID,
 								completed: true,
