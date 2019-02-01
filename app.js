@@ -16,38 +16,83 @@ var people = {"doctorwhocomposer": {"username":"doctorwhocomposer", "forename":"
 	,"mollyGould": {"username":"mollyGould", "forename":"Molly", "surname":"Gould", "role":"Head of Equipment", "password":"password"}
 };
 
-var serviceRequests = [];
+var serviceRequests = {
+	0: [0,
+		'Andrew',
+		'Howell',
+		'howelldrew99@gmail.com',
+		'Mildert Event',
+		'BOP',
+		'2019-02-09',
+		'21:00',
+		'02:00',
+		[ 'Base Lights', 'Profile Lights', 'RGB Lights' ],
+		'Yes',
+		'3',
+		'2',
+		'0',
+		false ]
+};
+var requestIDCounter = 1;
 
-var messages = [];
+var messages = {
+	0:[ 0,
+		 'Mike Tyson',
+		 'mikeyBoi@hotmail.com',
+		 '0123456789',
+		 'Yo, wassup bro. Imma be in Durham tomorrow, hit me up for some sick times',
+		 false ]
+};
+var messageIDCounter = 1;
 
 app.get('/people', function(req, resp){
 	resp.send(people);
 })
 
 app.get('/people/:username', function(req, resp){
-	var response = Object.values(people[req.params.username]);
-	response = response.slice(0,-1);
+	var response = people[req.params.username];
 	resp.send(response);
 })
 
-app.post('/people', function(req, resp){
+app.get('/serviceRequest', function(req, resp){
+	resp.send(serviceRequests);
+})
+
+app.get('/completeRequest', function(req, resp){
+	var request = serviceRequests[req.query.id]
+	var requestLength = request.length;
+	var response = request[requestLength - 1];
+	resp.send(response);
+})
+
+app.get('/message', function(req, resp){
+	resp.send(messages);
+})
+
+app.get('/answeredMessage', function(req, resp){
+	var message = messages[req.query.id]
+	var messageLength = message.length;
+	var response = message[messageLength - 1];
+	resp.send(response);
+})
+
+app.post('/people', function(req, resp, next){
 	//console.log("People post request");
 	if(req.body.access_token == 'concertina'){
 		if(!(req.body.username in people)){
-			people[req.body.username] = {"username":req.body.username, "forename":req.body.firstname, "surname":req.body.surname}
+			people[req.body.username] = {"username":req.body.username, "forename":req.body.firstname, "surname":req.body.surname, "role":req.body.role, "password":req.body.password}
 			resp.send(true);
 			//console.log(people);
 		}
 		else{
 			// Username taken
-			resp.status(400);
-			resp.type('txt').send('Forbidden');
+			resp.status(400).send("Username taken");
 		}
 	}
 	else{
 		//console.log('Forbidden');
 		resp.status(403);
-		resp.type('txt').send('Forbidden');
+		resp.send('Forbidden');
 	}
 })
 
@@ -77,7 +122,7 @@ app.post('/logIn', function(req, resp){
 })
 
 app.post('/serviceRequest', function(req, resp){
-	console.log("Service Request");
+	//console.log("Service Request");
 	if(req.body.access_token == 'concertina'){
 
 		var firstName = req.body.firstName;
@@ -96,13 +141,15 @@ app.post('/serviceRequest', function(req, resp){
 		var instrumentMics = req.body.instrumentMics;
 		var wirelessMics = req.body.wirelessMics;
 		
-		serviceRequests.push([firstName, lastName, email, eventType, eventDesc, eventDate, startTime, endTime, lightSelect, lightDesk, voiceMics, instrumentMics, wirelessMics]);
+		var requestID = requestIDCounter;
+		requestIDCounter = requestIDCounter ++;
+		serviceRequests[requestID] = [requestID,firstName, lastName, email, eventType, eventDesc, eventDate, startTime, endTime, lightSelect, lightDesk, voiceMics, instrumentMics, wirelessMics, false];
 		
 		console.log(serviceRequests);
 		resp.send(true);
 	}
 	else{
-		console.log('Forbidden');
+		//console.log('Forbidden');
 		resp.status(403);
 		resp.type('txt').send('Forbidden');
 	}
@@ -117,7 +164,38 @@ app.post('/message', function(req, resp){
 		var phone = req.body.phone;
 		var message = req.body.message;
 		
-		messages.push([name, email, phone, message]);
+		var messageID = messageIDCounter;
+		messageIDCounter = messageIDCounter ++;
+		messages[messageID] = [messageID, name, email, phone, message, false];
+		console.log(messages);
+		resp.send(true);
+	}
+	else{
+		//console.log('Forbidden');
+		resp.status(403);
+		resp.type('txt').send('Forbidden');
+	}
+})
+
+app.post('/completeRequest', function(req, resp){
+	//console.log("Login request");
+	if(req.body.access_token == 'concertina'){
+		serviceRequests[req.body.id].pop(); // Mark as completed
+		serviceRequests[req.body.id].push(true);
+		console.log(serviceRequests);
+		resp.send(true);
+	}
+	else{
+		//console.log('Forbidden');
+		resp.status(403);
+		resp.type('txt').send('Forbidden');
+	}
+})
+
+app.post('/answeredMessage', function(req, resp){
+	if(req.body.access_token == 'concertina'){
+		messages[req.body.id].pop(); // Mark as completed
+		messages[req.body.id].push(true);
 		console.log(messages);
 		resp.send(true);
 	}

@@ -23,6 +23,8 @@
 		</title>
 	</head>
 	
+	<body id="page-top">
+	
 		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navBar">
 			<div class="container">
 				<a class="navbar-brand js-scroll-trigger" style="font-size: 42px" href="#page-top">VM Tech - Members</a>
@@ -49,7 +51,7 @@
 			</div>
 		</nav>
 		
-		<section id="searchMembers" class="bg-light">
+		<section id="searchMembers" class="bg-light" style="padding-top:250px">
 			<div class="container">
 				<div class="row mb-5">
 					<div class="col-lg-12 text-center">
@@ -73,8 +75,8 @@
 						<button type="submit" class="btn btn-warning">Display all members</button>
 					</form>
 				</div>
-				<div id="peopleResultTable" class="table-responsive table-hover m-4">
-					<table class="table">
+				<div id="peopleResultTable" class="table-responsive">
+					<table class="table mt-4">
 						<thead class="thead-light">
 							<tr>
 								<th>Username</th>
@@ -83,7 +85,7 @@
 								<th>Role</th>
 							</tr>
 						</thead>
-						<tbody id="tableBody">
+						<tbody>
 						</tbody>
 					</table>
 				</div>
@@ -94,8 +96,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6 offset-sm-3 text-center">
-						<div class="col-lg-12 text-center mb-4">
-							<h2 class="section-heading text-uppercase">Add Members</h2>
+						<div class="col-lg-12 text-center">
+							<h2 class="section-heading text-uppercase" style="margin-bottom: 50px">Add Members</h2>
 						</div>
 						<div class="info-form">
 							<form id="addPersonForm" class="form" action="http://127.0.0.1:8080">
@@ -111,6 +113,14 @@
 									<label class="sr-only">Surname</label>
 									<input type="text" class="form-control" style="text-align: center" id="newSurname" placeholder="surname" required>
 								</div>
+								<div class="form-group mb-4">
+									<label class="sr-only">Role</label>
+									<input type="text" class="form-control" style="text-align: center" id="newRole" placeholder="role" required>
+								</div>
+								<div class="form-group mb-4">
+									<label class="sr-only">Password</label>
+									<input type="password" class="form-control" style="text-align: center" id="newPassword" placeholder="password" required>
+								</div>
 								<div class="form-group">
 									<button type="submit" class="btn btn-warning">Submit</button>
 								</div>
@@ -120,6 +130,90 @@
 				</div>
 			</div>
 		</section>
+		
+		<section id="serviceRequests" class="bg-light">
+			<div class="container">
+				<div class="row mb-2">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading text-uppercase">Service Requests</h2>
+						<h3 class="section-subheading text-muted" style="margin-bottom: 20px">Click a request to mark it as completed<h3>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<form id="getRequestsForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
+						<button type="submit" class="btn btn-warning">Display incomplete service requests</button>
+					</form>
+					<form id="getAllRequestsForm" class="form" action="http://127.0.0.1:8080">
+						<button type="submit" class="btn btn-warning">Display all service requests</button>
+					</form>
+				</div>
+				<div class="table-responsive">
+					<table id="requestsTable" class="table mt-4">
+						<thead class="thead-light">
+							<tr>
+								<th>RequestID</th>
+								<th>Firstname</th>
+								<th>Lastname</th>
+								<th>Email Address</th>
+								<th>Event Type</th>
+								<th>Event Description</th>
+								<th>Event Date</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Light Selection</th>
+								<th>Light Desk</th>
+								<th>Voice Mics</th>
+								<th>Instr. Mics</th>
+								<th>Wireless Mics</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		
+		<section id="messages">
+			<div class="container">
+				<div class="row mb-2">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading text-uppercase">Messages</h2>
+						<h3 class="section-subheading text-muted" style="margin-bottom: 20px">Click a message to mark it as answered<h3>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<form id="getMessagesForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
+						<button type="submit" class="btn btn-warning">Display unanswered messages</button>
+					</form>
+					<form id="getAllMessagesForm" class="form" action="http://127.0.0.1:8080">
+						<button type="submit" class="btn btn-warning">Display all messages</button>
+					</form>
+				</div>
+				<div class="table-responsive">
+					<table id="messagesTable" width="100%" class="table mt-4">
+						<thead class="thead-light">
+							<tr>
+								<th>MessageID</th>
+								<th>Name</th>
+								<th>Email Address</th>
+								<th>Phone Number</th>
+								<th>Message</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		
+		
+		<footer class="bg-dark">
+			<div class="container">
+				<button class="btn btn-warning mr-sm-2" type="button" onclick="window.location.href='index.html'">Back to the main site
+			</div>
+		</footer>
 		
 		<script>			
 			function getPeopleFunction(){
@@ -141,10 +235,8 @@
 							}
 							row.append($("</tr>"));
 							row.hide();
-							$('tr:last-child').after(row);
+							$('#peopleResultTable tr:last-child').after(row);
 							row.fadeIn("slow");
-							//$('#tableBody').append(row)
-							
 						}
 					});
 				return false;
@@ -156,7 +248,7 @@
 							
 						$("#peopleResultTable").find("tr:gt(0)").remove();
 					
-						var recordArray = data;
+						var recordArray = Object.values(data).slice(0,-1);
 						var tableWidth = recordArray.length;
 
 						var row = $("<tr>");
@@ -165,9 +257,8 @@
 						}
 						row.append($("</tr>"));
 						row.hide();
-						$('tr:last-child').after(row);
+						$('#peopleResultTable tr:last-child').after(row);
 						row.fadeIn("slow");
-						//$('#tableBody').append(row)
 						
 					});
 				return false;
@@ -179,32 +270,265 @@
 					username: $('#newUsername').val(),
 					firstname: $('#newFirstname').val(),
 					surname: $('#newSurname').val(),
+					role: $('#newRole').val(),
+					password: $('#newPassword').val(),
 					
 					access_token: 'concertina'
 					},
-					function (data){
+					function (data, xhr){
 						if(data == true){
 							alert('User added successfully');
 						}
-						if(data == false){
+						else{
+							alert(data.statusCode);
 							alert('Username already taken, please try a different username');
 							$('#newUsername').val("");
 						}
-					});
-				//this.on("error", alert('Forbidden')).preventDefault();
+					}
+				);
+				//this.on("error", function(err){alert(err)});
+				$("#addPersonForm").trigger("reset");
 				return false;
+			}
+			
+			function getRequestsFunction(){
+				$.get("http://127.0.0.1:8080/serviceRequest",
+					function (data){
+							
+						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+					
+						var peopleArray = Object.values(data);
+						var tableLength = peopleArray.length;
+						
+						if(tableLength !== 0){
+							for(var i = 0; i < tableLength ; i++){
+								var recordArray = peopleArray[i];
+								var tableWidth = recordArray.length;
+								
+								var requestID = recordArray[0];
+								
+								if(!(recordArray[tableWidth-1])){ //Only displays row if incomplete
+									var row = $("<tr id='request" + requestID + "'>");
+									for(var j = 0; j < tableWidth - 1; j++){
+										if(j == 6){
+											recordArray[j] = recordArray[j].replace(/-/g, '/')
+										}
+										row.append($("<td>" + recordArray[j] + "</td>"));
+									}
+									row.append($("</tr>"));
+									row.hide();
+									$('#requestsTable tr:last-child').after(row);
+									row.fadeIn("slow");
+								}
+							}
+						}
+						if($('#requestsTable tr').length == 1){
+							alert('No Incomplete Service Requests at this time');
+						}
+					});
+				showAllRequests = false;
+				return false;
+			};
+			
+			function getAllRequestsFunction(){
+				$.get("http://127.0.0.1:8080/serviceRequest",
+					function (data){
+							
+						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+					
+						var peopleArray = Object.values(data);
+						var tableLength = peopleArray.length;
+						
+						if(tableLength !== 0){
+						
+							for(var i = 0; i < tableLength ; i++){
+								var recordArray = peopleArray[i];
+								var tableWidth = recordArray.length;
+								
+								var requestID = recordArray[0];
+								
+								var row = $("<tr id='request" + requestID + "'>");
+								for(var j = 0; j < tableWidth - 1; j++){
+									if(j == 6){
+										recordArray[j] = recordArray[j].replace(/-/g, '/')
+									}
+									row.append($("<td>" + recordArray[j] + "</td>"));
+								}
+								row.append($("</tr>"));
+								row.hide();
+								$('#requestsTable tr:last-child').after(row);
+								row.fadeIn("slow");
+							}
+						}
+						if($('#requestsTable tr').length == 1){
+							alert('No Service Requests at this time');
+						}
+					});
+				showAllRequests = true;
+				return false;
+			};
+			
+			function requestClick(){
+				var requestID = $(this).attr('id').replace('request','');
+				
+				$.get("http://127.0.0.1:8080/completeRequest", {"id":parseInt(requestID)},
+					function (data){
+						var complete =  data;
+						
+						if(!complete){ // If state needs to be changed
+							if(confirm("Are you sure you want to mark Request " + requestID + " as completed?")){
+								// Mark as Completed
+								$.post("http://127.0.0.1:8080/completeRequest/",
+								{
+								id: requestID,
+								completed: true,
+								
+								access_token: 'concertina'
+								},
+								function (data){
+									if(data == true){
+										alert('Marked as completed');
+									}
+								});
+								// Reset table
+								if(showAllRequests){
+									getAllRequestFunction();
+								}
+								else{
+									getRequestsFunction();
+								}
+							}
+						}
+					}
+				);
+			}
+			
+			function getMessagesFunction(){
+				$.get("http://127.0.0.1:8080/message",
+					function (data){
+							
+						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+					
+						var peopleArray = Object.values(data);
+						var tableLength = peopleArray.length;
+						
+						if(tableLength !== 0){
+							for(var i = 0; i < tableLength ; i++){
+								var recordArray = peopleArray[i];
+								var tableWidth = recordArray.length;
+								
+								var messageID = recordArray[0];
+								
+								if(!(recordArray[tableWidth-1])){ //Only displays row if incomplete
+									var row = $("<tr id='message" + messageID + "'>");
+									for(var j = 0; j < tableWidth - 1; j++){
+										row.append($("<td>" + recordArray[j] + "</td>"));
+									}
+									row.append($("</tr>"));
+									row.hide();
+									$('#messagesTable tr:last-child').after(row);
+									row.fadeIn("slow");
+								}
+							}
+						}
+						if($('#messagesTable tr').length == 1){
+							alert('No Unanswered Messages at this time');
+						}
+					});
+				showAllMessages = false;
+				return false;
+			};
+			
+			function getAllMessagesFunction(){
+				$.get("http://127.0.0.1:8080/message",
+					function (data){
+							
+						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
+					
+						var peopleArray = Object.values(data);
+						var tableLength = peopleArray.length;
+						
+						if(tableLength !== 0){
+						
+							for(var i = 0; i < tableLength ; i++){
+								var recordArray = peopleArray[i];
+								var tableWidth = recordArray.length;
+								
+								var messageID = recordArray[0];
+								
+								var row = $("<tr id='message" + messageID + "'>");
+								for(var j = 0; j < tableWidth - 1; j++){
+									row.append($("<td>" + recordArray[j] + "</td>"));
+								}
+								row.append($("</tr>"));
+								row.hide();
+								$('#messagesTable tr:last-child').after(row);
+								row.fadeIn("slow");
+							}
+						}
+						if($('#messagesTable tr').length == 1){
+							alert('No Messages at this time');
+						}
+					});
+				showAllMessages = true;
+				return false;
+			};
+			
+			function messageClick(){
+				var messageID = $(this).attr('id').replace('message','');
+				
+				$.get("http://127.0.0.1:8080/answeredMessage", {"id":parseInt(messageID)},
+					function (data){
+						var complete =  data;
+						
+						if(!complete){ // If state needs to be changed
+							if(confirm("Are you sure you want to mark Message " + messageID + " as answered?")){
+								// Mark as Completed
+								$.post("http://127.0.0.1:8080/answeredMessage/",
+								{
+								id: messageID,
+								completed: true,
+								
+								access_token: 'concertina'
+								},
+								function (data){
+									if(data == true){
+										alert('Marked as answered');
+									}
+								});
+								// Reset table
+								if(showAllMessages){
+									getAllMessagesFunction();
+								}
+								else{
+									getMessagesFunction();
+								}
+							}
+						}
+					}
+				);
 			}
 			
 			$("#getPeopleForm").on("submit", getPeopleFunction);
 			$("#getPersonForm").on("submit", getPersonFunction);
 			$("#addPersonForm").on("submit", addPersonFunction);
+			$("#getRequestsForm").on("submit", getRequestsFunction);
+			$("#getAllRequestsForm").on("submit", getAllRequestsFunction);
+			$('#requestsTable').on("click", 'tr', requestClick);
+			$("#getMessagesForm").on("submit", getMessagesFunction);
+			$("#getAllMessagesForm").on("submit", getAllMessagesFunction);
+			$('#messagesTable').on("click", 'tr', messageClick);
+			
+			var showAllRequests;
+			var showAllMessages;
 		</script>
+			
+			
 			
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.0/bootstrap-slider.min.js"></script>-->
 		<script src="js/agency.min.js"></script>
 	</body>
 </html>
