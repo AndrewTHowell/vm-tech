@@ -141,7 +141,7 @@
 				
 				<div class="modal fade" id="servicesModal" role="dialog">
 					<div class="modal-dialog modal-lg">
-						<form id="serviceRequest" action="http://127.0.0.1:8080">
+						<form id="serviceRequest" action="https://unified-destiny-230410.appspot.com">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h4 class="modal-title">Services Form</h4>
@@ -454,7 +454,7 @@
 					lightDeskOption = "No";
 				}
 				
-				$.post("http://127.0.0.1:8080/serviceRequest/",
+				$.post("https://unified-destiny-230410.appspot.com/serviceRequest/",
 				{
 					firstName: $('#firstName').val(),
 					lastName: $('#lastName').val(),
@@ -487,7 +487,7 @@
 			}
 			
 			function sendMessage(){
-				$.post("http://127.0.0.1:8080/message/",
+				$.post("https://unified-destiny-230410.appspot.com/message/",
 				{
 					name: $('#name').val(),
 					email: $('#email').val(),
