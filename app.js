@@ -1,6 +1,7 @@
-"use strict"
+//"use strict"
 
 const express = require('express');
+const rateLimit = require("express-save-limit");
 const app = express();
 
 var bodyParser = require('body-parser');
@@ -8,8 +9,16 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(express.static('public'));
 
-var people = {"doctorwhocomposer": {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "role":"N/A", "password":"davidTennant"}
-	,"andrewHowell": {"username":"andrewHowell", "forename":"Andrew", "surname":"Howell", "role":"Head of External Events", "password":"password"}
+//app.enable("trust proxy");
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 100, // 15 minutes
+	max: 20
+});
+
+app.use(limiter);
+
+var people = {"andrewHowell": {"username":"andrewHowell", "forename":"Andrew", "surname":"Howell", "role":"Head of External Events", "password":"password"}
 	,"shannonMoxey": {"username":"shannonMoxey", "forename":"Shannon", "surname":"Moxey", "role":"Head of Tech", "password":"password"}
 	,"SamHumphriss": {"username":"SamHumphriss", "forename":"Sam", "surname":"Humphriss", "role":"Deputy Head of Tech / Head of Light", "password":"password"}
 	,"jamesOrr": {"username":"jamesOrr", "forename":"James", "surname":"Orr", "role":"Head of Sound", "password":"password"}

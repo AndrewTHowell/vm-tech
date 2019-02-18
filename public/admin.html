@@ -64,7 +64,7 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getPersonForm" class="form-inline" action="https://unified-destiny-230410.appspot.com">
+					<form id="getPersonForm" class="form-inline" action="http://127.0.0.1:8080">
 						<div class="form-group">
 							<label for="username" class="text-uppercase mr-3">Search by Username: </label>
 							<input type="text" class="form-control mr-3" id="username" placeholder="username" required>
@@ -76,7 +76,7 @@
 					OR
 				</div>
 				<div class="row justify-content-center">
-					<form id="getPeopleForm" class="form" action="https://unified-destiny-230410.appspot.com">
+					<form id="getPeopleForm" class="form" action="http://127.0.0.1:8080">
 						<button type="submit" class="btn btn-warning">Display all members</button>
 					</form>
 				</div>
@@ -105,7 +105,7 @@
 							<h2 class="section-heading text-uppercase" style="margin-bottom: 50px">Add Members</h2>
 						</div>
 						<div class="info-form">
-							<form id="addPersonForm" class="form" action="https://unified-destiny-230410.appspot.com">
+							<form id="addPersonForm" class="form" action="http://127.0.0.1:8080">
 								<div class="form-group mb-4">
 									<label class="sr-only">Username</label>
 									<input type="text" class="form-control" style="text-align: center" id="newUsername" placeholder="username" required>
@@ -145,10 +145,10 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getRequestsForm" class="form" style="margin-right:15px" action="https://unified-destiny-230410.appspot.com">
+					<form id="getRequestsForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
 						<button type="submit" style="margin-bottom:4px" class="btn btn-warning">Display incomplete service requests</button>
 					</form>
-					<form id="getAllRequestsForm" class="form" action="https://unified-destiny-230410.appspot.com">
+					<form id="getAllRequestsForm" class="form" action="http://127.0.0.1:8080">
 						<button type="submit" class="btn btn-warning">Display all service requests</button>
 					</form>
 				</div>
@@ -188,10 +188,10 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<form id="getMessagesForm" class="form" style="margin-right:15px" action="https://unified-destiny-230410.appspot.com">
+					<form id="getMessagesForm" class="form" style="margin-right:15px" action="http://127.0.0.1:8080">
 						<button type="submit" class="btn btn-warning">Display unanswered messages</button>
 					</form>
-					<form id="getAllMessagesForm" class="form" action="https://unified-destiny-230410.appspot.com">
+					<form id="getAllMessagesForm" class="form" action="http://127.0.0.1:8080">
 						<button type="submit" class="btn btn-warning">Display all messages</button>
 					</form>
 				</div>
@@ -222,7 +222,7 @@
 		
 		<script>			
 			function getPeopleFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/people",
+				$.get("http://127.0.0.1:8080/people",
 					function (data){
 							
 						$("#peopleResultTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
@@ -249,7 +249,7 @@
 			};
 			
 			function getPersonFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/people/" + $('#username').val(),
+				$.get("http://127.0.0.1:8080/people/" + $('#username').val(),
 					function (data){
 							
 						$("#peopleResultTable").find("tr:gt(0)").remove();
@@ -272,7 +272,7 @@
 			};
 			
 			function addPersonFunction(){
-				$.post("https://unified-destiny-230410.appspot.com/people/",
+				$.post("http://127.0.0.1:8080/people/",
 					{
 					username: $('#newUsername').val(),
 					firstname: $('#newFirstname').val(),
@@ -299,7 +299,7 @@
 			}
 			
 			function getRequestsFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/serviceRequest",
+				$.get("http://127.0.0.1:8080/serviceRequest",
 					function (data){
 							
 						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
@@ -339,7 +339,7 @@
 			};
 			
 			function getAllRequestsFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/serviceRequest",
+				$.get("http://127.0.0.1:8080/serviceRequest",
 					function (data){
 							
 						$("#requestsTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
@@ -380,14 +380,14 @@
 			function requestClick(){
 				var requestID = $(this).attr('id').replace('request','');
 				
-				$.get("https://unified-destiny-230410.appspot.com/completeRequest", {"id":parseInt(requestID)},
+				$.get("http://127.0.0.1:8080/completeRequest", {"id":parseInt(requestID)},
 					function (data){
 						var complete =  data;
 						
 						if(!complete){ // If state needs to be changed
 							if(confirm("Are you sure you want to mark Request " + requestID + " as completed?")){
 								// Mark as Completed
-								$.post("https://unified-destiny-230410.appspot.com/completeRequest/",
+								$.post("http://127.0.0.1:8080/completeRequest/",
 								{
 								id: requestID,
 								completed: true,
@@ -413,7 +413,7 @@
 			}
 			
 			function getMessagesFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/message",
+				$.get("http://127.0.0.1:8080/message",
 					function (data){
 							
 						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
@@ -450,7 +450,7 @@
 			};
 			
 			function getAllMessagesFunction(){
-				$.get("https://unified-destiny-230410.appspot.com/message",
+				$.get("http://127.0.0.1:8080/message",
 					function (data){
 							
 						$("#messagesTable").find("tr:gt(0)").remove(); <!--Clears table before population-->
@@ -488,14 +488,14 @@
 			function messageClick(){
 				var messageID = $(this).attr('id').replace('message','');
 				
-				$.get("https://unified-destiny-230410.appspot.com/answeredMessage", {"id":parseInt(messageID)},
+				$.get("http://127.0.0.1:8080/answeredMessage", {"id":parseInt(messageID)},
 					function (data){
 						var complete =  data;
 						
 						if(!complete){ // If state needs to be changed
 							if(confirm("Are you sure you want to mark Message " + messageID + " as answered?")){
 								// Mark as Completed
-								$.post("https://unified-destiny-230410.appspot.com/answeredMessage/",
+								$.post("http://127.0.0.1:8080/answeredMessage/",
 								{
 								id: messageID,
 								completed: true,
