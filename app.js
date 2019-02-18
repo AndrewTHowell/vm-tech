@@ -1,7 +1,7 @@
 //"use strict"
 
 const express = require('express');
-const rateLimit = require("express-save-limit");
+const rateLimit = require("express-rate-limit");
 const app = express();
 
 var bodyParser = require('body-parser');
