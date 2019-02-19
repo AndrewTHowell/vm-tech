@@ -164,11 +164,11 @@
 													</div>
 													<div class="form-group">
 														<label for="eventEmail">Organiser Email Address:</label>
-														<input type="email" class="form-control" id="organiserEmail" required>
+														<input type="email" class="form-control" id="organiserEmail">
 													</div>
 													<div class="form-group">
 														<label for="eventEmail">Organiser Phone Number:</label>
-														<input type="email" class="form-control" id="organiserPhone" required>
+														<input type="email" class="form-control" id="organiserPhone">
 													</div>
 													<div class="form-group custom-control custom-radio">
 														<label for="radio">Preferred Method of Contact:</label>
@@ -185,32 +185,49 @@
 															<label class="custom-control-label" for="contactMethod3">By Text Message</label>
 														</div>
 													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-header bg-dark">
+												<a class="text-warning">Event Details</a>
+											</div>
+											<div>
+												<div class="card-body">
 													<div class="form-group custom-control custom-radio">
 														<label for="radio">Type of Event:</label>
 														<div class="radio-inline">
-															<input type="radio" class="custom-control-input" id="customRadio1" name="eventType" value="Mildert Event" required>
-															<label class="custom-control-label" for="customRadio1">Mildert Event</label>
+															<input type="radio" class="custom-control-input" id="eventType1" name="eventType" value="Mildert Event" required>
+															<label class="custom-control-label" for="eventType1">Mildert Event (on VM premises)</label>
 														</div>
 														<div class="radio-inline">
-															<input type="radio" class="custom-control-input" id="customRadio2" name="eventType" value="External Event">
-															<label class="custom-control-label" for="customRadio2">External Event (Non-Mildert event)</label>
+															<input type="radio" class="custom-control-input" id="eventType2" name="eventType" value="External Event">
+															<label class="custom-control-label" for="eventType2">External Event (not on VM premises)</label>
 														</div>
 													</div>
 													<div class="form-group">
-														<label for="eventDesc">Short Event Description:</label>
-														<input type="text" class="form-control" id="eventDesc" name="eventDesc" required>
+														<label for="eventName">Event Name:</label>
+														<input type="text" class="form-control" id="eventName" required>
+													</div>
+													<div class="form-group">
+														<label for="eventLocation">Event Location:</label>
+														<input type="text" class="form-control" id="eventLocation" required>
+													</div>
+													<div class="form-group">
+														<label for="eventBudget">Event Budget (£):</label>
+														<input type="number" value="0" min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control" id="eventBudget" required>
 													</div>
 													<div class="form-group">
 														<label for="eventDesc">Date of Event:</label>
-														<input type="date" class="form-control" id="eventDate" name="eventDate" required>
+														<input type="date" class="form-control" id="eventDate" required>
 													<div class="form-group">
 													</div>
 														<label for="eventDesc">Event Start Time:</label>
-														<input type="time" class="form-control" id="startTime" name="startTime" required>
+														<input type="time" class="form-control" id="startTime" required>
 													<div class="form-group">
 													</div>
 														<label for="eventDesc">Event End Time:</label>
-														<input type="time" class="form-control" id="endTime" name="endTime" required>
+														<input type="time" class="form-control" id="endTime" required>
 													</div>
 												</div>
 											</div>
