@@ -148,7 +148,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<h4 class="modal-title">Services Form</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<button type="button" class="close" data-dismiss="modal" id="modalClose">&times;</button>
 								</div>
 								<div class="modal-body">
 									<div id="accordion">
@@ -159,16 +159,16 @@
 											<div>
 												<div class="card-body">
 													<div class="form-group">
-														<label for="firstName">Organiser Name:</label>
+														<label for="organiserName">Organiser Name:</label>
 														<input type="text" class="form-control" id="organiserName" required>
 													</div>
 													<div class="form-group">
-														<label for="eventEmail">Organiser Email Address:</label>
+														<label for="organiserEmail">Organiser Email Address:</label>
 														<input type="email" class="form-control" id="organiserEmail">
 													</div>
 													<div class="form-group">
-														<label for="eventEmail">Organiser Phone Number:</label>
-														<input type="email" class="form-control" id="organiserPhone">
+														<label for="organiserPhone">Organiser Phone Number:</label>
+														<input type="text" class="form-control" id="organiserPhone">
 													</div>
 													<div class="form-group custom-control custom-radio">
 														<label for="radio">Preferred Method of Contact:</label>
@@ -480,6 +480,10 @@
 				return false;
 			}
 			
+			function setRequired(){
+				
+			}
+			
 			function submitRequest(){
 				var lightDeskOption
 				if($('#lightDesk').val() === "on"){
@@ -491,11 +495,15 @@
 				
 				$.post("/serviceRequest",
 				{
-					firstName: $('#firstName').val(),
-					lastName: $('#lastName').val(),
-					email: $('#eventEmail').val(),
+					organiserName: $('#organiserName').val(),
+					organiserEmail: $('#organiserEmail').val(),
+					organiserPhone: $('#organiserPhone').val(),
+					organiserName: $('input[name=contactMethod]:checked').val(),
+					
 					eventType: $('input[name=eventType]:checked').val(),
-					eventDesc: $('#eventDesc').val(),
+					eventName: $('#eventName').val(),
+					eventLocation: $('#eventLocation').val(),
+					eventBudget: $('#eventBudget').val(),
 					eventDate: $('#eventDate').val(),
 					startTime: $('#startTime').val(),
 					endTime: $('#endTime').val(),
@@ -515,9 +523,15 @@
 					}
 					
 				});
-				$('#serviceRequest').trigger("reset");
-				$("#servicesModal .close").click();
-				$('.modal-backdrop').remove();
+
+				//$('#serviceRequest').trigger("reset");
+				
+				// None of the below methods work in closing the modal and hiding the fade, therefore reload page had to be used
+				//$("#servicesModal .close").click();
+				//$('.modal-backdrop').remove();
+				//$("#servicesModal").modal("hide");
+				//$("#modalClose").click();
+				location.reload();
 				return false;
 			}
 			
